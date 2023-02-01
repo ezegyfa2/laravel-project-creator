@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaravelProjectCreator", "LaravelProjectCreator\LaravelProjectCreator.csproj", "{FB1B53D4-8488-444C-B15C-FA5F5403411B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LaravelProjectCreatorForm", "LaravelProjectCreatorForm\LaravelProjectCreatorForm.csproj", "{B82E54D3-C5B3-4377-B01F-03B88CE572E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB1B53D4-8488-444C-B15C-FA5F5403411B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB1B53D4-8488-444C-B15C-FA5F5403411B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB1B53D4-8488-444C-B15C-FA5F5403411B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB1B53D4-8488-444C-B15C-FA5F5403411B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B82E54D3-C5B3-4377-B01F-03B88CE572E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B82E54D3-C5B3-4377-B01F-03B88CE572E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B82E54D3-C5B3-4377-B01F-03B88CE572E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B82E54D3-C5B3-4377-B01F-03B88CE572E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9536E6AE-3A17-4CF1-96B1-098A6095739D}
+	EndGlobalSection
+EndGlobal
