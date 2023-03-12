@@ -76,6 +76,22 @@ namespace LaravelProjectCreator
             }
         }
 
+        public string MiddlewareFolderPath
+        {
+            get
+            {
+                return Path.Combine(HttpFolderPath, "Middleware");
+            }
+        }
+
+        public string HttpFolderPath
+        {
+            get
+            {
+                return Path.Combine(AppFolderPath, "Http");
+            }
+        }
+
         public string AppFolderPath
         {
             get
@@ -181,6 +197,7 @@ namespace LaravelProjectCreator
             installPackages();
             updateEnvFile();
             updateConfigFiles();
+            addGdprMiddlewares();
             addDesignTemplate();
             updateServiceProvider();
             addDesignerRoutes();
@@ -262,6 +279,70 @@ namespace LaravelProjectCreator
             string configFileContent = File.ReadAllText(DatabaseConfigFilePath);
             configFileContent = configFileContent.Replace("return [", "return [\r\n\r\n    'admin' => [],");
             File.WriteAllText(DatabaseConfigFilePath, configFileContent);
+        }
+
+        protected void addGdprMiddlewares()
+        {
+            createFileFromResource(
+                Path.Combine(MiddlewareFolderPath, "AddQueuedCookiesToResponse.php"),
+                "LaravelProjectCreator.Resources.AddQueuedCookiesToResponse.txt"
+            );
+            createFileFromResource(
+                Path.Combine(MiddlewareFolderPath, "CookieConsent.php"), 
+                "LaravelProjectCreator.Resources.CookieConsent.php"
+            );
+            createFileFromResource(
+                Path.Combine(MiddlewareFolderPath, "ShareErrorsFromSession.php"),
+                "LaravelProjectCreator.Resources.ShareErrorsFromSession.txt"
+            );
+            createFileFromResource(
+                Path.Combine(MiddlewareFolderPath, "StartSession.php"),
+                "LaravelProjectCreator.Resources.StartSession.txt"
+            );
+            updateEncryptCookies();
+            updateVerifyCsrfToken();
+            updateKernel();
+        }
+
+        protected void updateEncryptCookies() 
+        {
+            string encryptCookiesPath = Path.Combine(MiddlewareFolderPath, "EncryptCookies.php");
+            string encryptCookiesContent = File.ReadAllText(encryptCookiesPath);
+            encryptCookiesContent.Replace(
+                "protected $except = [", 
+                "protected $except = [\n'consent',"
+            );
+            File.WriteAllText(encryptCookiesPath, encryptCookiesContent);
+        }
+
+        protected void updateVerifyCsrfToken() 
+        {
+            string verifyCsrfTokenPath = Path.Combine(MiddlewareFolderPath, "VerifyCsrfToken.php");
+            string verifyCsrfTokenContent = File.ReadAllText(verifyCsrfTokenPath);
+            verifyCsrfTokenContent.Replace(
+                "use Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken", 
+                "use Closure;\nuse Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken"
+            );
+            File.WriteAllText(verifyCsrfTokenPath, verifyCsrfTokenContent);
+        }
+
+        protected void updateKernel()
+        {
+            string kernelPath = Path.Combine(HttpFolderPath, "Kernel.php");
+            string kernelCsrfTokenContent = File.ReadAllText(kernelPath);
+            kernelCsrfTokenContent.Replace(
+                "\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse::class", 
+                "\\App\\Http\\Middleware\\AddQueuedCookiesToResponse::class"
+            );
+            kernelCsrfTokenContent.Replace(
+                "\\Illuminate\\Session\\Middleware\\StartSession::class", 
+                "\\App\\Http\\Middleware\\StartSession::class"
+            );
+            kernelCsrfTokenContent.Replace(
+                "\\Illuminate\\View\\Middleware\\ShareErrorsFromSession::class", 
+                "\\App\\Http\\Middleware\\ShareErrorsFromSession::class"
+            );
+            File.WriteAllText(kernelPath, kernelCsrfTokenContent);
         }
 
         protected void addDesignTemplate()

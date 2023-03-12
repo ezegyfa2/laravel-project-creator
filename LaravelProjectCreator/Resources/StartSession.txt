@@ -1,0 +1,37 @@
+﻿<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Session\Middleware\StartSession as LaravelStartSession;
+use Illuminate\Session\SessionManager;
+
+class StartSession extends LaravelStartSession
+{
+    /**
+     * Create a new session middleware.
+     *
+     * @param  \Illuminate\Session\SessionManager  $manager
+     * @param  callable|null  $cacheFactoryResolver
+     * @return void
+     */
+    public function __construct(SessionManager $manager, callable $cacheFactoryResolver = null)
+    {
+        parent::__construct($manager, $cacheFactoryResolver);
+    }
+
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        if ($request->cookie('consent') == null) {
+            return $next($request);
+        }
+        return parent::handle($request, $next);
+    }
+}
