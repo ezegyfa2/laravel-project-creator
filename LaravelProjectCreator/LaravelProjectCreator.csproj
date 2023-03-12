@@ -123,7 +123,11 @@
     <EmbeddedResource Include="Resources\DynamicView.txt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ShareErrorsFromSession.txt" />
+    <EmbeddedResource Include="Resources\StartSession.txt" />
     <EmbeddedResource Include="Resources\Designed.txt" />
+    <EmbeddedResource Include="Resources\AddQueuedCookiesToResponse.txt" />
+    <EmbeddedResource Include="Resources\CookieConsent.txt" />
     <Content Include="Resources\Fontawesome\css\all.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
