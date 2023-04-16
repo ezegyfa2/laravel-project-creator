@@ -198,6 +198,7 @@ namespace LaravelProjectCreator
             updateEnvFile();
             updateConfigFiles();
             addGdprMiddlewares();
+            addLanguageMiddleware();
             addDesignTemplate();
             updateServiceProvider();
             addDesignerRoutes();
@@ -301,7 +302,7 @@ namespace LaravelProjectCreator
             );
             updateEncryptCookies();
             updateVerifyCsrfToken();
-            updateKernel();
+            addGDPRToKernel();
         }
 
         protected void updateEncryptCookies() 
@@ -326,7 +327,7 @@ namespace LaravelProjectCreator
             File.WriteAllText(verifyCsrfTokenPath, verifyCsrfTokenContent);
         }
 
-        protected void updateKernel()
+        protected void addGDPRToKernel()
         {
             string kernelPath = Path.Combine(HttpFolderPath, "Kernel.php");
             string kernelCsrfTokenContent = File.ReadAllText(kernelPath);
@@ -341,6 +342,17 @@ namespace LaravelProjectCreator
             kernelCsrfTokenContent.Replace(
                 "\\Illuminate\\View\\Middleware\\ShareErrorsFromSession::class", 
                 "\\App\\Http\\Middleware\\ShareErrorsFromSession::class"
+            );
+            File.WriteAllText(kernelPath, kernelCsrfTokenContent);
+        }
+        
+        protected void addLanguageMiddleware()
+        {
+            string kernelPath = Path.Combine(HttpFolderPath, "Kernel.php");
+            string kernelCsrfTokenContent = File.ReadAllText(kernelPath);
+            kernelCsrfTokenContent.Replace(
+                "protected $routeMiddleware = [",
+                "protected $routeMiddleware = [\n'setLanguage' => \\Ezegyfa\\LaravelHelperMethods\\Language\\Middleware::class,"
             );
             File.WriteAllText(kernelPath, kernelCsrfTokenContent);
         }
